@@ -85,15 +85,18 @@ async def handle_query(request: Request, response: Response, q: str):
     Accepts a natural language query via the 'q' parameter,
     analyzes it, and returns the answer from the sales dataset.
     """
+    email_address = "22f3003185@ds.study.iitm.ac.in"
+    
     # Add the custom X-Email header to the response
-    response.headers["X-Email"] = "22f3003185@ds.study.iitm.ac.in"
+    response.headers["X-Email"] = email_address
     
     if df.empty:
-        return {"answer": "Error: Dataset not loaded."}
+        return {"answer": "Error: Dataset not loaded.", "email": email_address}
         
     answer = answer_question(q)
     
-    return {"answer": answer}
+    # The error message suggests the email must also be in the JSON body.
+    return {"answer": answer, "email": email_address}
 
 # --- 6. Running the Application ---
 # To run this app:
